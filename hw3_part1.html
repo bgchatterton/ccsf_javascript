@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CNIT 133 Homework 3 - Student Grades - Part 1</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Homework 2 for JavaScript, jQuery, AJAX course at CCSF">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <style>
+ body {
+    background-color: #69d499; 
+    color: black;
+  }
+	</style>
+ <script>
+  $(document).ready(function(){
+$("#myform").validate({
+rules:
+{
+hwavg: { required: true, number: true, min: 0, max: 100},
+mtscore: { required: true, number: true, min: 0, max: 100},
+fescore: { required: true, number: true, min: 0, max: 100},
+participation: { required: true, number: true, min: 0, max: 100},
+}
+});
+});
+
+ </script>
+
+<script>
+
+function process() {
+
+  let number1, number2, number3, number4, n1, n2, n3, n4;
+
+number1 = document.forms["myform"].elements["hwavg"].value;
+number2 = document.forms["myform"].elements["mtscore"].value;
+number3 = document.forms["myform"].elements["fescore"].value;
+number4 = document.forms["myform"].elements["participation"].value;
+
+n1 = parseFloat(number1);
+n2 = parseFloat(number2);
+n3 = parseFloat(number3);
+n4 = parseFloat(number4);
+
+let finalaverageraw = (.5 * n1) + (.2 * n2) + (.2 * n3) + (.1 * n4);
+let finalaverage = Math.round(finalaverageraw);
+let grade;
+  if (finalaverage >= 90) {grade = "A";}
+  else if (finalaverage >= 80) {grade = "B";}
+  else if (finalaverage >= 70) {grade = "C";}
+  else if (finalaverage >= 60) {grade = "D";}
+  else {grade = "F";}
+
+let poorresult;
+  if (grade === "D" || grade === "F") {
+    poorresult = "Student must retake the course"}
+  else {"Good work!"}
+
+if ($("#myform").valid()) {
+  
+  document.forms["myform"].elements["result"].value = ("Your final average is " + finalaverage) + "\n" + "You got a "+ grade + " in the course" + "\n" + (poorresult)}
+
+else{
+  document.forms["myform"].elements["result"].value = "Please enter valid numbers";}
+
+
+  $("#myform").on("reset", function() {
+  $(this).validate().resetForm();
+  $(this).find(".error").removeClass("error");
+  });
+}
+
+
+
+
+</script>
+
+</head>
+
+<body>
+
+  <form name="myform" id="myform">
+  <table>
+  <tr>
+  <td>Homework Average:</td>
+  <td><input type="number" step="any" name="hwavg" min="0" max="100"></td>
+  </tr>
+  <tr>
+  <td>Mid-Term Exam Score:</td>
+  <td><input type="number" step="any" name="mtscore" min="0" max="100"></td>
+  </tr>
+  <tr>
+  <td>Final Exam Score:</td>
+  <td><input type="number" step="any" name="fescore" min="0" max="100"></td>
+  </tr>
+  <tr>
+  <td>Participation Score:</td>
+  <td><input type="number" step="any" name="participation" min="0" max="100"></td>
+</tr>
+  </table>
+  
+  <br> Results:
+  <textarea id="textresult" rows="5" cols="40" name="result" readonly>
+  </textarea>
+  <br><br>
+  
+  <input type="button" onclick="process()" value="SUBMIT" style="font-size: 16px; font-weight: bold;">
+  <input type="reset" value="CLEAR">
+
+  </form>
+  
+  
+  
+  <p><a href="hw3.html">Back to homework 3</a></p> 
+  
+  </body>
+  </html>

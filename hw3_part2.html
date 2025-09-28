@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CNIT 133 Homework 3 - Sales Comissions - Part 2</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Homework 2 for JavaScript, jQuery, AJAX course at CCSF">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+    <style>
+ body {
+    background-color: #d469c0; 
+    font-family: Arial, sans-serif;
+  }
+	</style>
+
+<style>
+    .row {
+      display: flex;
+      gap: 20px;
+      color: rgb(53, 6, 67)
+    }
+</style>
+
+<script>
+    $( function() {
+      $(document).tooltip();
+    } );
+    </script>
+ 
+
+ <script>
+  $(document).ready(function(){
+$("#myform").validate({
+rules:
+{
+item1: { required: true, number: true, min: 0},
+item2: { required: true, number: true, min: 0},
+item3: { required: true, number: true, min: 0},
+item4: { required: true, number: true, min: 0},
+}
+});
+});
+
+ </script>
+
+<script>
+
+function process() {
+
+if ($("#myform").valid()) {
+
+let number1, number2, number3, number4, n1, n2, n3, n4;
+
+number1 = document.forms["myform"].elements["item1"].value;
+number2 = document.forms["myform"].elements["item2"].value;
+number3 = document.forms["myform"].elements["item3"].value;
+number4 = document.forms["myform"].elements["item4"].value;
+
+n1 = parseFloat(number1);
+n2 = parseFloat(number2);
+n3 = parseFloat(number3);
+n4 = parseFloat(number4);
+  
+document.getElementById("item1qty").value = n1;
+document.getElementById("item2qty").value = n2;
+document.getElementById("item3qty").value = n3;
+document.getElementById("item4qty").value = n4;
+
+let total1 = (n1 * 20.99)
+let total2 = (n2 * 12.75)
+let total3 = (n3 * 9.95)
+let total4 = (n4 * 35.89)
+
+let formatted1 = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+}).format(total1);
+
+let formatted2 = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+}).format(total2);
+
+let formatted3 = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+}).format(total3);
+
+let formatted4 = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+}).format(total4);
+
+
+document.getElementById("item1total").value = formatted1;
+document.getElementById("item2total").value = formatted2;
+document.getElementById("item3total").value = formatted3;
+document.getElementById("item4total").value = formatted4;
+
+document.getElementById("totalsold").value = (n1 + n2 + n3 + n4);
+
+let totalnoformat = (((total1 + total2 + total3 + total4) * .09) + 250)
+
+let totalformat = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD'
+}).format(totalnoformat);
+
+
+document.getElementById("totalearn").value = totalformat;
+
+
+  $("#myform").on("reset", function() {
+  $(this).validate().resetForm();
+  $(this).find(".error").removeClass("error");
+  });
+}}
+
+
+</script>
+
+</head>
+
+<body>
+
+<h1>Homework 3 - Part 2</h1>
+<br>
+<form name="myform" id="myform">
+
+
+Seller's Name:
+<input type="text" minlength="3" name="salesname" title="Please make sure that the salesperson's name is spelled correctly">
+<h3 style="font-family: Arial, sans-serif; font-size: 12px;"><em>For each item type quantity sold by the seller:</em></h3>
+
+<table>
+  <tr><td>Item 1:</td>
+  <td><input type="number" step="1" name="item1" min="0"></td>
+  </tr>
+  <tr>
+  <td>Item 2:</td>
+  <td><input type="number" step="1" name="item2" min="0"> </td>
+  </tr>
+  <tr>
+  <td>Item 3:</td>
+  <td><input type="number" step="1" name="item3" min="0"></td>
+  </tr>
+  <tr>
+  <td>Item 4:</td>
+  <td><input type="number" step="1" name="item4" min="0"></td>
+</tr>
+  </table>
+ 
+
+  </form>
+  
+   
+  <input type="button" onclick="process()" form="myform" value="SUBMIT" style="font-weight: bold;">
+  <input type="reset" value="CLEAR" form="myform">
+
+  <br><br><br> 
+
+  <div class="row"> 
+    <div>Item #</div> 
+    <div>Price</div>
+    <div>Quantity Sold</div>
+    <div>Total $</div>
+  </div>
+  <br>
+  <div class="row"> 
+    <div>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div> 
+    <div>$20.99</div>
+    <div><textarea form="myform" id="item1qty" cols="8" readonly></textarea></div>
+    <div><textarea form="myform" id="item1total" cols="8" readonly></textarea></div>
+  </div>
+  <br> 
+  <div class="row"> 
+    <div>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div> 
+    <div>$12.75</div>
+    <div><textarea form="myform" id="item2qty" cols="8" readonly></textarea></div>
+    <div><textarea form="myform" id="item2total" cols="8" readonly></textarea></div>
+  </div>
+  <br>
+  <div class="row"> 
+    <div>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div> 
+    <div>$9.95&nbsp;&nbsp;</div>
+    <div><textarea form="myform" id="item3qty" cols="8" readonly></textarea></div>
+    <div><textarea form="myform" id="item3total" cols="8" readonly></textarea></div>
+  </div>
+  <br>
+  <div class="row"> 
+    <div>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div> 
+    <div>$35.89</div>
+    <div><textarea form="myform" id="item4qty" cols="8" readonly></textarea></div>
+    <div><textarea form="myform" id="item4total" cols="8" readonly></textarea></div>
+  </div>
+  <br>
+  <div class="row"> 
+    <div>Total Amount Sold:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div> 
+    <div><textarea form="myform" id="totalsold" cols="15" style="text-align: right;" readonly></textarea></div>
+    </div>
+  <br>
+  <div class="row"> 
+    <div>Total Weekly Earnings:</div> 
+    <div><textarea form="myform" id="totalearn" cols="15" style="text-align: right;" readonly></textarea></div>
+</div>
+
+  <p><a href="hw3.html">Back to homework 3</a></p> 
+  
+  </body>
+  </html>
