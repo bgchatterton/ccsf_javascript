@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CNIT 133 Homework 5 - States - Part 3</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Homework 5 for JavaScript, jQuery, AJAX course at CCSF">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <style>
+ body {
+    background-color: #b279af; 
+    color: black;
+  }
+
+  
+	</style>
+
+
+
+<script>
+$(function(){
+  const $form = $("#myform");
+  $form.validate({
+    onkeyup: false,
+    onclick: false,
+    onfocusout: false,
+    rules: {
+      state:   { required: true, minlength: 2 },
+    },
+    messages: {
+      state:   "Sorry, we do not have information about this state! We only have information about a few states.",
+    },
+    errorPlacement: function(){},
+    submitHandler: function(form){
+      const $state = $("#state");
+      const raw = ($state.val() || "").toString().trim();
+      if (!raw) {
+        $("#textresult").val("Please enter a state.");
+        return false;
+      }
+
+      const upper = raw.toUpperCase();
+      const match = (window.stateFacts || []).find(function(item){
+        var abbr = item[0];
+        var name = item[1];
+        return abbr === upper || name.toUpperCase() === upper;
+      });
+
+      if (match) {
+        var abbr = match[0];
+        var name = match[1];
+        var capital = match[2];
+        var population = match[3];
+        $state.val(abbr);
+        $("#textresult").val(
+          "State: " + name + " (" + abbr + ")" + "\n" +
+          "Capital: " + capital + "\n" +
+          "Population: " + population
+        );
+      } else {
+        $("#textresult").val(
+          "Sorry, we do not have information about this state! We only have information about a few states."
+        );
+      }
+
+      return false;
+    }
+  });
+
+
+});
+</script>
+
+
+</head>
+
+<body>
+
+<h1>Homework 5 - States - Part 3</h1>
+
+<script> 
+window.stateFacts = [
+  ["AL", "Alabama", "Montgomery", "4,903,185"],
+  ["AK", "Alaska", "Juneau", "731,545"],
+  ["AZ", "Arizona", "Phoenix", "7,278,717"],
+  ["AR", "Arkansas", "Little Rock", "3,017,825"],
+  ["CA", "California", "Sacramento", "39,512,223"],
+  ["CO", "Colorado", "Denver", "5,758,736"]
+];
+
+</script>
+
+<br>
+<form name="myform" id="myform">
+
+Enter a state:
+<input type="text" minlength="2" name="state" id="state" title="Please enter a state">
+
+<br>
+<br>
+
+<button id="submitBtn" type="submit" form="myform" style="font-weight: bold;">SUBMIT</button>
+<input type="reset" value="CLEAR" form="myform">
+
+<br> Results:
+<textarea id="textresult" rows="5" cols="40" name="result" readonly>
+  </textarea>
+
+</form>
+
+
+
+
+<br><br><br> 
+
+
+
+
+
+<p><a href="hw5.html">Back to homework 5</a></p>
+  
+  </body>
+  </html>

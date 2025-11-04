@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CNIT 133 Homework 5 - Part 2</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Homework 5 for JavaScript, jQuery, AJAX course at CCSF">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <style>
+ body {
+    background-color: #e1b034; 
+    color: black;
+  }
+
+  
+	</style>
+
+
+
+</head>
+
+<body>
+
+<h1>Homework 5 - Part 2</h1>
+<br>
+<form name="myform" id="myform">
+
+
+<p>Please select the cutest animals:</p>
+<br>
+
+<select name="animals" id="animals">
+  <option value="">Choose animal:</option>
+  <option value="fox">Fox</option>
+  <option value="cat">Cat</option>
+  <option value="dog">Dog</option>
+  <option value="rabbit">Rabbit</option>
+  <option value="tiger">Tiger</option>
+  </select>
+
+  <br>
+<select name="destList" id="destList" onchange="goToNewPage(this.form)">
+  <option value="">Choose a website:</option>
+  <option value="https://www.reddit.com/r/cuteanimals/">r/cuteanimals</option>
+  <option value="https://www.discovermagazine.com/20-of-the-most-adorable-animals-to-help-make-anyones-day-46767">20 of the Cutest Animals on Earth to Brighten Your Day</option>
+  <option value="https://paradepets.com/pet-news/cute-animals">These 55 Cute Animals Are the Most Adorable Creatures in the World</option>
+  <option value="https://www.youtube.com/watch?v=3Rf0dIk_Eec">
+    8 Minutes of Baby Animals: Pure Joy and Cuteness</option>
+  </select>
+
+
+</form>
+
+<br>
+<br>
+<p><a href="hw5.html">Back to homework 5</a></p>
+  
+  <script>
+  function goToNewPage(myform) {
+    var mydest = myform.destList.value;
+    if (mydest) {
+      window.open(mydest, "_blank");
+    } else {
+      alert('Please select a website.');
+    }
+  }
+  </script>
+  
+  </body>
+  </html>

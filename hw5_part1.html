@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CNIT 133 Homework 5 - Movies - Part 1</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Homework 5 for JavaScript, jQuery, AJAX course at CCSF">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <style>
+ body {
+    background-color: #d9e6c0; 
+    color: black;
+  }
+
+  
+	</style>
+
+
+
+<script>
+$(function(){
+  const $form = $("#myform");
+  $form.validate({
+    onkeyup: false,
+    onclick: false,
+    onfocusout: false,
+    rules: {
+      myname:   { required: true, minlength: 3 },
+      age:      { required: true },
+      browser:  { required: true },
+      genrelist:{ required: true }
+    },
+    messages: {
+      myname:   "Please enter your name (min 3 characters).",
+      age:      "Please select your age range.",
+      browser:  "Please select at least one browser.",
+      genrelist:"Please choose a genre."
+    },
+    errorPlacement: function(){},
+    invalidHandler: function(event, validator){
+      const lines = ["Please correct the following:"].concat(
+        $.map(validator.errorList, function(e){ return "- " + e.message; })
+      );
+      $("#textresult").val(lines.join("\n"));
+    },
+    submitHandler: function(form){
+      $("#textresult").val("Thanks, your data was submitted!");
+      return false;
+    }
+  });
+
+  $("#submitBtn").on("click", function(){ $form.submit(); });
+});
+</script>
+
+
+</head>
+
+<body>
+
+<h1>Homework 5 - Part 1</h1>
+<br>
+<form name="myform" id="myform">
+
+
+My Name:
+<input type="text" minlength="3" name="myname" title="Please make sure that the your name is spelled correctly">
+
+
+<p>Please select your age range:</p>
+<input type="radio" id="less21" name="age" value="less than 21">
+<label for="less21">less than 21</label><br>
+<input type="radio" id="21to50" name="age" value="between 21 and 50">
+<label for="21to50">between 21 and 50</label><br>
+<input type="radio" id="older50" name="age" value="older than 50">
+<label for="older50">older than 50</label>
+
+<p>Please select the browsers you have used:</p>
+<input type="checkbox" id="Firefox" name="browser" value="Firefox">
+<label for="Firefox"> Firefox</label><br>
+<input type="checkbox" id="Edge" name="browser" value="Edge">
+<label for="Edge"> Edge</label><br>
+<input type="checkbox" id="Chrome" name="browser" value="Chrome">
+<label for="Chrome"> Chrome</label><br>
+<input type="checkbox" id="Safari" name="browser" value="Safari">
+<label for="Safari"> Safari</label><br>
+<br>
+
+<select name="genrelist" id="genrelist">
+  <option value="">Choose genre:</option>
+  <option value="action">Action</option>
+  <option value="comedy">Comedy</option>
+  <option value="drama">Drama</option>
+  <option value="documentary">Documentary</option>
+  <option value="sci-fi">Science Fiction</option>
+  </select>
+
+</form>
+
+
+
+<br>
+<br>
+<button id="submitBtn" type="submit" form="myform" style="font-weight: bold;">SUBMIT</button>
+<input type="reset" value="CLEAR" form="myform">
+
+<br><br><br> 
+
+<br> Results:
+<textarea id="textresult" rows="5" cols="40" name="result" readonly>
+</textarea>
+<br><br>
+
+<p><a href="hw5.html">Back to homework 5</a></p>
+  
+  </body>
+  </html>
