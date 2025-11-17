@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CNIT 133 Homework 6 - Part 2</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Homework 6 for JavaScript, jQuery, AJAX course at CCSF">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <style>
+ body {
+    background-color: #d9e6c0; 
+    color: black;
+  }
+
+  
+	</style>
+
+<script>
+  function handleSearch(event) {
+    event.preventDefault();
+    var content = document.getElementById("content").value;
+    var charInput = document.getElementById("searchChar").value;
+    var resultEl = document.getElementById("result");
+
+    if (!charInput || charInput.length !== 1) {
+      resultEl.textContent = "";
+      openPopup("Please enter exactly one character to search.");
+      document.getElementById("searchChar").focus();
+      return;
+    }
+
+    var target = charInput.toLowerCase();
+    var count = 0;
+    for (var i = 0; i < content.length; i++) {
+      if (content.charAt(i).toLowerCase() === target) {
+        count++;
+      }
+    }
+
+    if (count > 0) {
+      resultEl.textContent = "The character '" + charInput + "' appears " + count + " times in your content.";
+    } else {
+      resultEl.textContent = "";
+      openPopup("Search character '" + charInput + "' not found in the content you typed");
+    }
+  }
+
+  function handleReset() {
+    document.getElementById("result").textContent = "";
+    document.getElementById("content").focus();
+  }
+
+  function openPopup(message) {
+    var left = window.screenX + Math.max(0, window.outerWidth - 340);
+    var top = window.screenY + Math.max(0, window.outerHeight - 200);
+    var features = "width=300,height=100,left=" + left + ",top=" + top + ",resizable=yes";
+    var w = window.open("", "notFoundWin", features);
+    if (w) {
+      w.document.open();
+      w.document.write('<!DOCTYPE html><html><head><title>Notice</title><meta charset="utf-8"><style>body{font-family: Arial, sans-serif; margin: 10px;} button{margin-top:10px;}</style></head><body><p>' + message.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</p><button onclick="window.close()">Close</button></body></html>');
+      w.document.close();
+      w.focus();
+    }
+  }
+  </script>
+</head>
+
+<body>
+
+<h1>Homework 6 - Part 2</h1>
+<br>
+<form id="searchForm" name="searchForm" onsubmit="handleSearch(event)">
+         <label for="content">Type your content</label>: <br>
+         <textarea id="content" name="content" rows="8" cols="60"></textarea><br>
+         <label for="searchChar">Type a single character to search</label>: <br>
+         <input type="text" id="searchChar" name="searchChar" maxlength="1"> 
+         <input type="submit" value="Submit"><br>
+         <input type="reset" value="Clear" onclick="handleReset()">
+      </form>
+
+<p id="result"></p>
+
+<p><a href="hw6.html">Back to homework 6</a></p>
+  
+  </body>
+  </html>
