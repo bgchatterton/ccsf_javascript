@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>CNIT 133 Homework 7 - Part 2</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Homework 7 for JavaScript, jQuery, AJAX course at CCSF">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <style>
+body {background-color: #f5f5dc;
+	margin:50px 0px; padding:0px;
+	text-align:center;}
+	
+#wrapper {
+	width:800px;
+	margin:0px auto;
+	text-align:left;	
+	}
+
+#navigation {
+	display: flex;
+}
+
+#navigation ul, #navigation li {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#navigation a {
+	background-color: rgb(204,204,204);
+	text-decoration: none;
+	font: 16px 'ColaborateLightRegular', Arial, sans-serif;
+	text-indent: 25px;
+	border-top: 1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #999;
+	border-bottom:1px solid #999;
+	margin: 0px;
+	padding: 0px;
+	color: rgb(53,75,118);
+	display: block;
+	height: 30px;
+	line-height: 30px;
+	width: 180px;
+}
+
+#navigation a:hover {
+	border-top:1px solid #999;
+	border-left:1px solid #999;
+	border-right:1px solid #ccc;
+	border-bottom:1px solid #ccc;
+	background-color: #555;
+	color: white;
+}
+
+#navigation li {
+	position: relative;
+}
+
+#navigation li ul {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 100%;
+	z-index: 1000;
+}
+
+/* Submenu item anchors match parent size and style */
+#navigation li ul a {
+	width: 180px;
+	background-color: rgb(204,204,204);
+	border-top: 1px solid #ccc;
+	border-left:1px solid #ccc;
+	border-right:1px solid #999;
+	border-bottom:1px solid #999;
+}
+</style>
+
+<script>
+$(function() {
+	$("#navigation li").hover(
+		function() {
+			$(this).children("ul").stop(true, true).slideDown(250);
+		},
+		function() {
+			$(this).children("ul").stop(true, true).slideUp(250);
+		}
+	);
+}); // end ready
+
+</script>
+
+</head>
+
+<body>
+
+ <div id="wrapper">
+ 
+    <h1>Navigation Menu - 2025 JavaScript Class</h1>
+
+     <ul id="navigation">
+       <li><a href="https://bgchatterton.github.io/ccsf_javascript/">Home</a></li>
+        <li><a href="https://bgchatterton.github.io/ccsf_javascript/hw2.html">Homework 2</a>
+          <ul>
+            <li><a href="https://bgchatterton.github.io/ccsf_javascript/part1.html">Part 1 - Displays Pairs of Numbers and Letters</a></li>
+            <li><a href="https://bgchatterton.github.io/ccsf_javascript/part2.html">Part 2 - Displays User Inputs</a></li>
+          </ul>
+        </li>
+
+        <li><a href="https://bgchatterton.github.io/ccsf_javascript/hw3.html">Homework 3</a>
+          <ul>
+            <li><a href="https://bgchatterton.github.io/ccsf_javascript/hw3_part1.html">Part 1 - Student Grades</a></li>
+            <li><a href="https://bgchatterton.github.io/ccsf_javascript/hw3_part2.html">Part 2 - Salesperson Comissions</a></li>
+          </ul>
+        </li>
+        
+        <li><a href="https://bgchatterton.github.io/ccsf_javascript/hw4.html">Homework 4</a>
+          <ul>
+            <li><a href="https://bgchatterton.github.io/ccsf_javascript/hw4_part1.html">Part 1 - Looping Examples</a></li>
+            <li><a href="https://bgchatterton.github.io/ccsf_javascript/hw4_part2.html">Part 2 - Compound Interest</a></li>
+          </ul>
+        </li>
+    </ul>
+    <p><a href="hw7.html">Back to homework 7</a></p>
+  </div>
+</body>
+</html>
