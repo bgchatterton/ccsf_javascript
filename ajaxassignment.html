@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Homework 8 - AJAX Application</title>
+<style>
+table,th,td {
+  border : 1px solid black;
+  border-collapse: collapse;
+}
+th,td {
+  padding: 5px;
+}
+</style>
+</head>
+<body>
+<h1>Homework 8 - AJAX Application</h1>
+<p><a href="index.html">Back to Homework 1</a></p>
+
+<button type="button" onclick="loadDoc()">Get CD collection</button>
+<br><br>
+<table id="demo"></table>
+
+<script>
+function loadDoc() {
+  const out = document.getElementById("demo");
+  const xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState === 4) {
+      if (this.status === 200 || (this.status === 0 && this.responseText)) {
+        try {
+          myFunction(this);
+        } catch (e) {
+          out.innerHTML = "Error rendering table: " + e.message;
+        }
+      } else {
+        out.innerHTML = "Request failed. Status: " + this.status + " " + (this.statusText || "");
+      }
+    }
+  };
+  try {
+    // Hint some browsers to treat response as XML even if no server MIME type
+    if (xhttp.overrideMimeType) {
+      xhttp.overrideMimeType("text/xml");
+    }
+  } catch (e) {}
+  xhttp.open("GET", "cd_catalog.xml", true);
+  xhttp.send();
+}
+function myFunction(xml) {
+  let xmlDoc = xml.responseXML;
+  // Fallback when responseXML is null (e.g., incorrect MIME type or local file)
+  if (!xmlDoc && xml.responseText) {
+    const parser = new DOMParser();
+    xmlDoc = parser.parseFromString(xml.responseText, "text/xml");
+  }
+  if (!xmlDoc) {
+    document.getElementById("demo").innerHTML = "Could not parse XML.";
+    return;
+  }
+  const x = xmlDoc.getElementsByTagName("CD");
+  let table = "<tr><th>Artist</th><th>Title</th></tr>";
+  for (let i = 0; i < x.length; i++) {
+    const artist = x[i].getElementsByTagName("ARTIST")[0]?.textContent || "";
+    const title = x[i].getElementsByTagName("TITLE")[0]?.textContent || "";
+    table += "<tr><td>" + artist + "</td><td>" + title + "</td></tr>";
+  }
+  document.getElementById("demo").innerHTML = table;
+}
+</script>
+
+<h2>Explanation of AJAX</h2>
+<p>
+This page uses an XMLHttpRequest (AJAX) to load <code>cd_catalog.xml</code> from the same
+site without reloading the page. When you click the button, the code creates a new
+<code>XMLHttpRequest</code>, opens a <code>GET</code> to the XML file, and sends it. When the
+response finishes, the <code>onload</code> handler calls <code>myFunction</code> with the response.
+</p>
+<p>
+Inside <code>myFunction</code>, the browser-parsed <code>responseXML</code> is queried for
+every <code>&lt;CD&gt;</code> element. For each CD, it reads the <code>&lt;ARTIST&gt;</code> and
+<code>&lt;TITLE&gt;</code> values, builds a set of table rows, and injects the result into the
+table with id <code>demo</code>. Because the XML file is loaded from the same origin, no CORS
+configuration is needed; this also works on static hosting such as GitHub Pages.
+</p>
+
+<h2>REST API</h2>
+<p>
+For our team at Acme Web Labs, I recommend evaluating the OpenWeather API for reliable
+weather data. Responses are returned as JSON, which is easy to consume in JavaScript.
+An API key is required; there is a free tier for development, with paid tiers for higher usage.
+See the <a href="https://openweathermap.org/api">OpenWeather API documentation</a> for
+endpoints and usage, and the <a href="https://openweathermap.org/price">pricing page</a>
+for plan limits and costs.
+</p>
+<p>
+OpenWeather reduces time-to-market versus sourcing and maintaining our own data feeds.
+It provides global coverage, current conditions, forecasts, and historical datasets,
+with straightforward authentication using an API key passed as a query parameter or header.
+Its consistent JSON schemas and examples make integration and maintenance clear for developers.
+</p>
+
+</body>
+</html>
+
